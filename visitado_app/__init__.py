@@ -8,6 +8,7 @@ db = SQLAlchemy()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
+    app.secret_key = Config.SECRET_KEY
     db.init_app(app)
 
     from visitado_app.routes import visitado
@@ -19,3 +20,5 @@ def create_app(config_class=Config):
 
 def page_not_found(e):
     return redirect(url_for("visitado.home"))
+
+
