@@ -1,2 +1,2 @@
-visitado_app/static/*
-visitado_app/templates/*
+visitado_app/static/* linguist-vendored
+visitado_app/templates/* linguist-vendored
