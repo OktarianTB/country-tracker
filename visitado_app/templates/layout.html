@@ -27,12 +27,18 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="{{ url_for('visitado.login') }}">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="{{ url_for('visitado.register') }}">Register</a>
-              </li>
+                {% if current_user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{{ url_for('visitado.logout') }}">Logout</a>
+                  </li>
+                {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{{ url_for('visitado.login') }}">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{{ url_for('visitado.register') }}">Register</a>
+                  </li>
+                {% endif %}
             </ul>
           </div>
         </div>
