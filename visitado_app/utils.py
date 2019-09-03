@@ -23,7 +23,10 @@ def generate_map(csv_file):
     ))
 
     fig.update_layout(
-        geo_scope='world'
+        geo_scope='world',
+        autosize=False,
+        width=1000,
+        height=1000
     )
 
-    pio.write_html(fig, "visitado_app/templates/map.html")
+    pio.write_html(fig, "templates/map.html")

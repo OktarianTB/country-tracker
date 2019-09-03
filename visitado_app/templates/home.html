@@ -2,7 +2,7 @@
 {% block content %}
     <br><br>
     {% if current_user.is_authenticated %}
-        <div class="content-section">
+        <div class="content-section row justify-content-center">
             <form method="POST" action="" class="form-inline">
                 {{ form.hidden_tag() }}
 
@@ -26,7 +26,7 @@
                 </div>
             </form>
         </div>
-    {% endif %}
     {% include "map.html" %}
+    {% endif %}
 
 {% endblock content %}
