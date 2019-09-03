@@ -1,29 +1,32 @@
 {% extends "layout.html" %}
 {% block content %}
     <br><br>
-    <div class="content-section">
-        <form method="POST" action="" class="form-inline">
-            {{ form.hidden_tag() }}
+    {% if current_user.is_authenticated %}
+        <div class="content-section">
+            <form method="POST" action="" class="form-inline">
+                {{ form.hidden_tag() }}
 
-            <fieldset class="form-group">
-                <div class="form-group mx-sm-3 mb-2">
+                <fieldset class="form-group">
+                    <div class="form-group mx-sm-3 mb-2">
 
-                    {% if form.new_country.errors %}}
-                        {{ form.new_country(class_="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.new_country.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.new_country(class_="form-control form-control-lg") }}
-                    {% endif%}
+                        {% if form.new_country.errors %}}
+                            {{ form.new_country(class_="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.new_country.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.new_country(class_="form-control form-control-lg") }}
+                        {% endif%}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class_="btn-lg btn-primary mb-2") }}
                 </div>
-            </fieldset>
-            <div class="form-group">
-                {{ form.submit(class_="btn-lg btn-primary mb-2") }}
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    {% endif %}
+    {% include "map.html" %}
 
 {% endblock content %}

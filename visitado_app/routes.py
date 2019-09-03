@@ -4,15 +4,19 @@ from visitado_app.utils import get_all_countries
 from visitado_app import db, bcrypt
 from visitado_app.model import User
 from flask_login import login_user, current_user, logout_user
+from visitado_app.map import get_map_settings
 
 visitado = Blueprint("visitado", __name__)
 
 
 @visitado.route("/", methods=["GET", "POST"])
 def home():
+    if not current_user.is_authenticated:
+        flash(f"Please login to access Visitado's features!", 'info')
     form = AddCountry()
     form.new_country.choices = get_all_countries()
-    return render_template("home.html", title="Home - Visitado", form=form)
+    map_settings = get_map_settings("visitado_app/static/map_data.csv")
+    return render_template("home.html", title="Home - Visitado", form=form, map_settings=map_settings)
 
 
 @visitado.route("/login", methods=["GET", "POST"])
