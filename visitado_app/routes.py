@@ -15,6 +15,8 @@ def home():
         flash(f"Please login to access Visitado's features!", 'info')
     form = AddCountry()
     form.new_country.choices = get_all_countries()
+    if form.validate_on_submit():
+        flash(form.new_country.data, "success")
     map_settings = get_map_settings("visitado_app/static/map_data.csv")
     return render_template("home.html", title="Home - Visitado", form=form, map_settings=map_settings)
 
@@ -42,6 +44,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
+
         flash(f'Your account has been successfully created!', 'success')
         return redirect(url_for("visitado.login"))
     return render_template("register.html", title="Register - Visitado", form=form)
