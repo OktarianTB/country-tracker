@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from visitado_app.forms import AddCountry, LoginForm, RegisterForm
-from visitado_app.utils import get_all_countries
+from visitado_app.utils import get_all_countries, get_list_from_string
 from visitado_app import db, bcrypt
 from visitado_app.model import User
 from flask_login import login_user, current_user, logout_user
-from visitado_app.map import get_map_settings
+from visitado_app.manager import add_country_to_user, get_countries_visited, generate_settings_from_data
 
 visitado = Blueprint("visitado", __name__)
 
@@ -13,12 +13,21 @@ visitado = Blueprint("visitado", __name__)
 def home():
     if not current_user.is_authenticated:
         flash(f"Please login to access Visitado's features!", 'info')
-    form = AddCountry()
-    form.new_country.choices = get_all_countries()
-    if form.validate_on_submit():
-        flash(form.new_country.data, "success")
-    map_settings = get_map_settings("visitado_app/static/map_data.csv")
-    return render_template("home.html", title="Home - Visitado", form=form, map_settings=map_settings)
+        return render_template("home.html", title="Home - Visitado")
+    else:
+        visited_countries = get_countries_visited()
+        print(visited_countries)
+        country_list = get_list_from_string(visited_countries)
+        map_settings = generate_settings_from_data(country_list)
+
+        form = AddCountry()
+        form.new_country.choices = get_all_countries()
+
+        if form.validate_on_submit():
+            add_country_to_user(form.new_country.data)
+            return redirect(url_for("visitado.home"))
+        return render_template("home.html", title="Home - Visitado", form=form,
+                               map_settings=map_settings, country_list=country_list)
 
 
 @visitado.route("/login", methods=["GET", "POST"])
@@ -41,10 +50,9 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password, countries_visited=None)
         db.session.add(user)
         db.session.commit()
-
         flash(f'Your account has been successfully created!', 'success')
         return redirect(url_for("visitado.login"))
     return render_template("register.html", title="Register - Visitado", form=form)

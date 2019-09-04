@@ -10,6 +10,12 @@ def get_all_countries():
     return countries
 
 
+def get_list_from_string(countries):
+    if type(countries) == str:
+        return countries.split(",")
+    return None
+
+
 # Only used once to generate map data in map.html
 def generate_map(csv_file):
     df = pd.read_csv(csv_file)
