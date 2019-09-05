@@ -3,8 +3,9 @@ from visitado_app.forms import AddCountry, LoginForm, RegisterForm
 from visitado_app.utils import get_all_countries, get_list_from_string
 from visitado_app import db, bcrypt
 from visitado_app.model import User
-from flask_login import login_user, current_user, logout_user
-from visitado_app.manager import add_country_to_user, get_countries_visited, generate_settings_from_data
+from flask_login import login_user, current_user, logout_user, login_required
+from visitado_app.manager import add_country_to_user, get_countries_visited, \
+    generate_settings_from_data, delete_country_from_user
 
 visitado = Blueprint("visitado", __name__)
 
@@ -28,6 +29,13 @@ def home():
             return redirect(url_for("visitado.home"))
         return render_template("home.html", title="Home - Visitado", form=form,
                                map_settings=map_settings, country_list=country_list)
+
+
+@login_required
+@visitado.route("/delete/<country_code>", methods=["GET", "POST"])
+def delete_country(country_code):
+    delete_country_from_user(country_code)
+    return redirect(url_for("visitado.home"))
 
 
 @visitado.route("/login", methods=["GET", "POST"])

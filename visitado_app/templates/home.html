@@ -1,6 +1,6 @@
 {% extends "home_layout.html" %}
 {% block content %}
-    <br><br>
+    <br>
     {% if current_user.is_authenticated %}
         <div class="content-section row justify-content-center">
             <form method="POST" action="" class="form-inline">
@@ -26,7 +26,10 @@
                 </div>
             </form>
         </div>
-    {% include "map.html" %}
+        {% include "map.html" %}
+        <br><br><br><br><br><br><br><br>
+        {% include "table.html" %}
+        <br><br>
     {% endif %}
 
 {% endblock content %}

@@ -1,0 +1,22 @@
+{% if country_list != None %}
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Country</th>
+                  <th scope="col">Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for country in country_list %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <th>{{ get_country_from_code(country) }}</th>
+                        <th><a href="{{ url_for('visitado.delete_country', country_code=country) }}">Delete</a></th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

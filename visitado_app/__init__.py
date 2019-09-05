@@ -3,10 +3,14 @@ from visitado_app.config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from visitado_app.utils import get_country_from_code
+
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
+
+from visitado_app.manager import delete_country_from_user
 
 
 def create_app(config_class=Config):
@@ -22,6 +26,8 @@ def create_app(config_class=Config):
     app.register_blueprint(visitado)
 
     app.register_error_handler(404, page_not_found)
+    app.jinja_env.globals.update(get_country_from_code=get_country_from_code,
+                                 delete_country_from_user=delete_country_from_user)
     return app
 
 

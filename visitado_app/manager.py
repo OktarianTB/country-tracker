@@ -1,5 +1,6 @@
 from visitado_app import db
 from flask_login import current_user
+from visitado_app.utils import get_string_from_list, get_list_from_string
 import csv
 
 
@@ -23,11 +24,24 @@ def get_countries_visited():
     return countries_visited
 
 
+def delete_country_from_user(country_code):
+    if country_code in current_user.countries_visited:
+        countries = get_list_from_string(current_user.countries_visited)
+        print("1 " + current_user.countries_visited)
+        countries.remove(country_code)
+        countries = get_string_from_list(countries)
+        print("2 " + current_user.countries_visited)
+        current_user.countries_visited = countries
+    if current_user.countries_visited == "":
+        current_user.countries_visited = None
+    db.session.commit()
+
+
 # The map takes a list where 0.0 represents non-visited countries and 1.0 represent visited countries
 def generate_settings_from_data(country_list):
     data = []
     pass_append = False
-    with open("visitado_app/static/map_data.csv") as csv_file:
+    with open("visitado_app/static/country_data.csv") as csv_file:
         reader = csv.reader(csv_file)
         for row in reader:
             if country_list:
