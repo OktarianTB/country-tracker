@@ -17,7 +17,6 @@ def home():
         return render_template("home.html", title="Home - Visitado")
     else:
         visited_countries = get_countries_visited()
-        print(visited_countries)
         country_list = get_list_from_string(visited_countries)
         map_settings = generate_settings_from_data(country_list)
 

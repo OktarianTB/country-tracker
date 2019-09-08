@@ -15,7 +15,6 @@ def add_country_to_user(country_code):
         current_user.countries_visited = country_code
     else:
         current_user.countries_visited = f"{countries},{country_code}"
-    # current_user.countries_visited = None
     db.session.commit()
 
 
