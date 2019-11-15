@@ -29,6 +29,9 @@
             <ul class="navbar-nav ml-auto">
                 {% if current_user.is_authenticated %}
                   <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{{ url_for('visitado.settings') }}">Settings</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="{{ url_for('visitado.logout') }}">Logout</a>
                   </li>
                 {% else %}

@@ -36,7 +36,11 @@ def delete_country_from_user(country_code):
     db.session.commit()
 
 
-# The map takes a list where 0.0 represents non-visited countries and 1.0 represent visited countries
+def change_user_color(new_color):
+    current_user.color = new_color
+    db.session.commit()
+
+
 def generate_settings_from_data(country_list):
     data = []
     pass_append = False

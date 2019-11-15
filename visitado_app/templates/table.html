@@ -11,8 +11,10 @@
             <tbody>
                 {% for country in country_list %}
                     <tr>
+                        {% set country_name = get_country_from_code(country) %}
                         <th scope="row">{{ loop.index }}</th>
-                        <th>{{ get_country_from_code(country) }}</th>
+                        <th><a href="{{ url_for('visitado.information', country=country_name) }}">
+                            {{ country_name }}</a></th>
                         <th><a href="{{ url_for('visitado.delete_country', country_code=country) }}">Delete</a></th>
                     </tr>
                 {% endfor %}

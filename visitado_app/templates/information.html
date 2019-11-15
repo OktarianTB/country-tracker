@@ -1,0 +1,24 @@
+{% extends "home_layout.html" %}
+{% block content %}
+
+    <div class="text-center">
+        <br>
+        <h2>{{ country }}</h2>
+        <br>
+        {% if info %}
+            <img src="https://www.factmonster.com/{{ info[0] }}">
+            <br><br><br>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h6>{{ info[1] }}</h6>
+                </div>
+            </div>
+        {% else %}
+            <br><br>
+            <h3>Sorry - no information is available for this country.</h3>
+        {% endif %}
+    </div>
+
+
+{% endblock content %}

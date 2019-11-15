@@ -5,7 +5,8 @@ from visitado_app import db, bcrypt
 from visitado_app.model import User
 from flask_login import login_user, current_user, logout_user, login_required
 from visitado_app.manager import add_country_to_user, get_countries_visited, \
-    generate_settings_from_data, delete_country_from_user
+    generate_settings_from_data, delete_country_from_user, change_user_color
+from visitado_app.country_information import get_country_info
 
 visitado = Blueprint("visitado", __name__)
 
@@ -23,11 +24,13 @@ def home():
         form = AddCountry()
         form.new_country.choices = get_all_countries()
 
+        color = current_user.color
+
         if form.validate_on_submit():
             add_country_to_user(form.new_country.data)
             return redirect(url_for("visitado.home"))
         return render_template("home.html", title="Home - Visitado", form=form,
-                               map_settings=map_settings, country_list=country_list)
+                               map_settings=map_settings, country_list=country_list, color=color)
 
 
 @login_required
@@ -57,7 +60,8 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password, countries_visited=None)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password,
+                    countries_visited=None, color="162, 155, 254")
         db.session.add(user)
         db.session.commit()
         flash(f'Your account has been successfully created!', 'success')
@@ -69,3 +73,29 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for("visitado.home"))
+
+
+@visitado.route("/settings")
+def settings():
+    if not current_user.is_authenticated:
+        flash(f"Please login to access Visitado's features!", 'info')
+        return render_template("home.html", title="Home - Visitado")
+    else:
+        pass
+    return render_template("settings.html", title="Settings")
+
+
+@login_required
+@visitado.route("/settings/update/<color>", methods=["GET", "POST"])
+def change_color(color):
+    change_user_color(color)
+    return redirect(url_for("visitado.home"))
+
+
+@visitado.route("/info/<country>", methods=["GET", "POST"])
+def information(country):
+    info = get_country_info(country)
+    return render_template("information.html", title="Information", country=country,
+                           info=info)
+
+

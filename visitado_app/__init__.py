@@ -10,7 +10,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 
-from visitado_app.manager import delete_country_from_user
+from visitado_app.manager import delete_country_from_user, change_user_color
 
 
 def create_app(config_class=Config):

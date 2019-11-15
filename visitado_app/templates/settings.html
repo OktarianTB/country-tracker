@@ -1,0 +1,25 @@
+{% extends "home_layout.html" %}
+{% block content %}
+
+    <div class="text-center"><br>
+        <h2>Settings</h2><br>
+        <h4>Pick a color for your visited countries</h4>
+        <br><br>
+
+        <h4><a href="{{ url_for('visitado.change_color', color='162, 155, 254') }}" style="color:#a29bfe;">Light Purple</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='108, 92, 231') }}" style="color:#6c5ce7;">Dark Purple</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='116, 185, 255') }}" style="color:#74b9ff;">Light Blue</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='9, 132, 227') }}" style="color:#0984e3;">Dark Blue</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='255, 118, 117') }}" style="color:#ff7675;">Light Red</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='214, 48, 49') }}" style="color:#d63031;">Dark Red</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='255, 234, 167') }}" style="color:#ffeaa7;">Light Yellow</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='253, 203, 110') }}" style="color:#fdcb6e;">Dark Yellow</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='253, 121, 168') }}" style="color:#fd79a8;">Light Pink</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='232, 67, 147') }}" style="color:#e84393;">Dark Pink</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='85, 239, 196') }}" style="color:#55efc4;">Light Green</a></h4>
+        <h4><a href="{{ url_for('visitado.change_color', color='0, 184, 148') }}" style="color:#00b894;">Dark Green</a></h4>
+        <br><br><br><br><br>
+
+    </div>
+
+{% endblock content %}
