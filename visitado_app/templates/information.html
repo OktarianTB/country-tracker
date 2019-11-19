@@ -9,11 +9,14 @@
             <img src="https://www.factmonster.com/{{ info[0] }}">
             <br><br><br>
 
+            {% if info[1] %}
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <h6>{{ info[1] }}</h6>
                 </div>
             </div>
+            {% endif %}
+
         {% else %}
             <br><br>
             <h3>Sorry - no information is available for this country.</h3>

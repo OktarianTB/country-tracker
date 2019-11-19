@@ -20,6 +20,10 @@ def create_app(config_class=Config):
 
     bcrypt.init_app(app)
     db.init_app(app)
+    # with app.app_context():
+    #     from visitado_app.model import User
+    #     db.create_all()
+    #     from visitado_app import routes, model
     login_manager.init_app(app)
 
     from visitado_app.routes import visitado
